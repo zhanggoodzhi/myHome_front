@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <el-container>
+    <el-container class="container">
       <el-header height="60px" class="header">
         <div class="left">
           <h1>Github:</h1>
@@ -12,8 +12,8 @@
         </div>
       </el-header>
       <el-container>
-        <el-aside width="200px">
-          <el-menu :router="true" default-active="/" class="el-menu-vertical-demo">
+        <el-aside class="menu-wrap" width="200px">
+          <el-menu :router="true" :default-active="$route.path" class="menu">
             <el-menu-item index="/">
               <i class="el-icon-info"></i>
               <span slot="title">首页</span>
@@ -35,8 +35,8 @@
 <script>
 export default {
   methods: {
-    jump:function(path){
-      console.log('334343');
+    jump: function(path) {
+      console.log("334343");
       this.$router.push(path);
     }
   }
@@ -55,6 +55,15 @@ export default {
   }
 }
 
+.container {
+  height: calc(~"100vh - 16px");
+}
+.menu-wrap {
+  border-right: 1px solid #e6e6e6;
+  .menu {
+    border-right: 0;
+  }
+}
 .header {
   border-bottom: 1px solid #e6e6e6;
   display: flex;
