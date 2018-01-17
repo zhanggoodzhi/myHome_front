@@ -2,7 +2,7 @@
   <div>
     <div class="search-wrap">
       <el-input class="keyword" v-model="keyword" placeholder="请输入日志关键字"></el-input>
-      <el-button type="primary" icon="el-icon-search"></el-button>
+      <el-button type="primary" icon="el-icon-search" @click="handleSearch()"></el-button>
       <el-button class="add" type="success" icon="el-icon-plus" @click="handleAdd()">新增日志</el-button>
     </div>
     <div class="table-wrap">
@@ -15,7 +15,7 @@
         </el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
-            <el-button size="mini" @click="handleEdit(scope.row)">编辑</el-button>
+            <el-button size="mini" type="primary" @click="handleEdit(scope.row)">编辑</el-button>
             <el-button size="mini" type="danger" @click="handleDelete(scope.row)">删除</el-button>
           </template>
         </el-table-column>
@@ -32,12 +32,14 @@
       </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+        <el-button type="primary" @click="save()">确 定</el-button>
       </span>
     </el-dialog>
   </div>
 </template>
 <script>
+import moment from "moment";
+
 export default {
   data() {
     return {
@@ -52,44 +54,117 @@ export default {
         title: [{ required: true, message: "请输入标题", trigger: "blur" }],
         content: [{ required: true, message: "请输入日志内容", trigger: "blur" }]
       },
-      tableData: [
-        {
-          date: "2016-05-02",
-          title: "王小虎",
-          content: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-04",
-          title: "王小虎",
-          content: "上海市普陀区金沙江路 1517 弄"
-        },
-        {
-          date: "2016-05-01",
-          title: "王小虎",
-          content: "上海市普陀区金沙江路 1519 弄"
-        },
-        {
-          date: "2016-05-03",
-          title: "王小虎",
-          content: "上海市普陀区金沙江路 1516 弄"
-        }
-      ]
+      currentId: "",
+      tableData: []
     };
   },
+  created() {
+    this.reload();
+  },
   methods: {
+    handleSearch() {
+      this.reload();
+    },
     handleAdd() {
-      this.dialogTitle='新增日志';
-      this.dialogVisible=true;
+      this.dialogTitle = "新增日志";
+      this.dialogVisible = true;
     },
     handleEdit(row) {
       console.log(row);
-      this.dialogTitle='编辑日志';
-      this.dialogVisible=true;
+      this.dialogTitle = "编辑日志";
+      this.data.title = row.title;
+      this.data.content = row.content;
+      this.currentId = row._id;
+      this.dialogVisible = true;
     },
     handleDelete(row) {
-      console.log(row);
+      this.$confirm("确定要删除该日志吗?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      }).then(() => {
+        this.$http
+          .post("http://127.0.0.1:3000/api/deleteNote", {
+            id: row._id
+          })
+          .then(
+            response => {
+              // get body data
+              this.$message({
+                type: "success",
+                message: response.body.message
+              });
+              this.reload();
+            },
+            response => {
+              // error callback
+              this.$message.error({
+                message: "出现错误"
+              });
+            }
+          );
+      });
     },
-    clearModal(){
+    reload() {
+      this.$http.get(`http://127.0.0.1:3000/api/getNotes?keyword=${this.keyword}`).then(response => {
+        this.tableData = response.body;
+      });
+    },
+    save() {
+      this.$refs.form.validate(result => {
+        if (result) {
+          // 验证通过,调用module里的setUserInfo方法
+          const currentDate = moment().format("YYYY-MM-DD HH:mm:ss");
+          const sendData = {
+            ...this.data,
+            date: currentDate
+          };
+          if (this.dialogTitle == "新增日志") {
+            this.$http.post("http://127.0.0.1:3000/api/addNote", sendData).then(
+              response => {
+                // get body data
+                this.dialogVisible = false;
+                this.$message({
+                  type: "success",
+                  message: response.body.message
+                });
+                this.reload();
+              },
+              response => {
+                // error callback
+                this.$message.error({
+                  message: "出现错误"
+                });
+              }
+            );
+          } else {
+            this.$http
+              .post("http://127.0.0.1:3000/api/updateNote", {
+                ...sendData,
+                id: this.currentId
+              })
+              .then(
+                response => {
+                  // get body data
+                  this.dialogVisible = false;
+                  this.$message({
+                    type: "success",
+                    message: response.body.message
+                  });
+                  this.reload();
+                },
+                response => {
+                  // error callback
+                  this.$message.error({
+                    message: "出现错误"
+                  });
+                }
+              );
+          }
+        }
+      });
+    },
+    clearModal() {
       this.$refs.form.resetFields();
     }
   }

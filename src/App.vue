@@ -77,7 +77,7 @@ export default {
     flex: 1;
     .img-wrap {
       display: inline-block;
-      animation: run 5s infinite linear alternate;
+      animation: run 8s infinite linear alternate;
       .gicon {
         width: 50px;
         transition: all 0.2s;
