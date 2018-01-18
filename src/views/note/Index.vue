@@ -84,7 +84,7 @@ export default {
         type: "warning"
       }).then(() => {
         this.$http
-          .post("http://127.0.0.1:3000/api/deleteNote", {
+          .post("http://39.107.85.104:80/api/deleteNote", {
             id: row._id
           })
           .then(
@@ -106,7 +106,7 @@ export default {
       });
     },
     reload() {
-      this.$http.get(`http://127.0.0.1:3000/api/getNotes?keyword=${this.keyword}`).then(response => {
+      this.$http.get(`http://39.107.85.104:80/api/getNotes?keyword=${this.keyword}`).then(response => {
         this.tableData = response.body;
       });
     },
@@ -120,10 +120,11 @@ export default {
             date: currentDate
           };
           if (this.dialogTitle == "新增日志") {
-            this.$http.post("http://127.0.0.1:3000/api/addNote", sendData).then(
+            this.$http.post("http://39.107.85.104:80/api/addNote", sendData).then(
               response => {
                 // get body data
                 this.dialogVisible = false;
+                this.keyword='';
                 this.$message({
                   type: "success",
                   message: response.body.message
@@ -139,7 +140,7 @@ export default {
             );
           } else {
             this.$http
-              .post("http://127.0.0.1:3000/api/updateNote", {
+              .post("http://39.107.85.104:80/api/updateNote", {
                 ...sendData,
                 id: this.currentId
               })
@@ -147,6 +148,7 @@ export default {
                 response => {
                   // get body data
                   this.dialogVisible = false;
+                  this.keyword='';
                   this.$message({
                     type: "success",
                     message: response.body.message
