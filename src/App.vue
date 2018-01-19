@@ -20,7 +20,11 @@
             </el-menu-item>
             <el-menu-item index="/note">
               <i class="el-icon-setting"></i>
-              <span slot="title">日志管理</span>
+              <span slot="title">日志</span>
+            </el-menu-item>
+            <el-menu-item index="/game">
+              <i class="el-icon-share"></i>
+              <span slot="title">游戏</span>
             </el-menu-item>
           </el-menu>
         </el-aside>
