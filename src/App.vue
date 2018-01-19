@@ -1,4 +1,9 @@
 <template>
+<!-- <div style="height:300px;display:flex;">
+  <div style="flex:none;width:300px;background:red;">
+  </div>
+  <div style="flex:1;background:yellow;"></div>
+</div> -->
   <div id="app">
     <el-container class="container">
       <el-header height="60px" class="header">
@@ -45,6 +50,7 @@ export default {
     }
   }
 };
+document.cookie="name=张志";
 </script>
 
 <style lang="less" scope>
@@ -91,5 +97,8 @@ export default {
       }
     }
   }
+}
+main{
+  display: block;
 }
 </style>
