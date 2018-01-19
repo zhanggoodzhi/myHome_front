@@ -103,17 +103,20 @@ export default {
 </script>
 <style lang="less" scoped>
 .horse-wrap {
-  padding: 5px 150px;
+  padding: 0 100px;
+  text-align: center;
   background: #eee;
   .box {
-    cursor: pointer;
     .horse-img {
-      width: 100%;
+      cursor: pointer;
+      width: 690px;
       height: auto;
     }
     .text {
+      cursor: pointer;
       position: absolute;
       bottom: 0;
+      left: calc(~"50% - 345px");
       padding-left: 10px;
       color: white;
     }
@@ -147,6 +150,7 @@ export default {
   }
   .info {
     padding: 20px;
+    margin-left: 10%;
     flex: 1;
     .official {
       margin-left: 46px;
