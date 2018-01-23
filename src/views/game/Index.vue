@@ -28,8 +28,8 @@
                 <div class="info">
                   <p>{{item.updateTime}}</p>
                   <p>
-                    <a :href="item.infoUrl">资料</a>
-                    <a class="official" :href="item.officialUrl">官网</a>
+                    <a target="_blank" :href="item.infoUrl">资料</a>
+                    <a target="_blank" class="official" :href="item.officialUrl">官网</a>
                   </p>
                 </div>
               </div>
@@ -85,12 +85,12 @@ export default {
   },
   methods: {
     getHorseLamp() {
-      this.$http.get("/api/games/horseLamp").then(response => {
+      this.$http.get("api/games/horseLamp").then(response => {
         this.horseLamp = response.body;
       });
     },
     getGameRank() {
-      this.$http.get("/api/games/rank").then(response => {
+      this.$http.get("api/games/rank").then(response => {
         this.rank = response.body;
       });
     },

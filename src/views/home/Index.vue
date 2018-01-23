@@ -1,5 +1,5 @@
 <template>
-    <span>哈罗，我叫张志</span>
+    <span>欢迎</span>
 </template>
 <script>
     
