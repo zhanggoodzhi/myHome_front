@@ -24,16 +24,20 @@
           </el-menu-item>
           <el-menu-item index="/note">
             <i class="el-icon-setting"></i>
-            <span slot="title">日志</span>
+            <span slot="title">留言</span>
           </el-menu-item>
           <el-menu-item index="/game">
             <i class="el-icon-share"></i>
-            <span slot="title">游戏</span>
+            <span slot="title">游戏分享</span>
+          </el-menu-item>
+          <el-menu-item v-show="isAdmin" index="/user">
+            <i class="el-icon-setting"></i>
+            <span slot="title">用户管理</span>
           </el-menu-item>
         </el-menu>
       </el-aside>
       <el-main>
-        <transition :duration="{ enter: 400, leave: 600 }" name="slide" enter-active-class="animated bounceInUp" leave-active-class="animated bounceOutRight" mode="out-in">
+        <transition name="slide" enter-active-class="animated bounceInLeft" leave-active-class="animated bounceOutRight" mode="out-in">
           <router-view/>
         </transition>
       </el-main>
@@ -44,6 +48,7 @@
   </el-container>
 </template>
 <script>
+import {getAuthData} from 'components/utils';
 export default {
   data() {
     return {
@@ -62,6 +67,11 @@ export default {
     onLogout() {
       localStorage.setItem("authData", "");
       this.$router.replace("/login");
+    }
+  },
+  computed: {
+    isAdmin() {
+      return getAuthData()&&getAuthData().ifAdmin;
     }
   }
 };

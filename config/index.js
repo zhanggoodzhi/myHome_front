@@ -14,7 +14,7 @@ module.exports = {
       '/api': {
         target: 'http://localhost'
       },
-      '/user': {
+      '/account': {
         target: 'http://localhost'
       }
     },

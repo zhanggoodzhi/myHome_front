@@ -4,11 +4,11 @@
       <el-tabs type="border-card">
         <el-tab-pane label="登录">
           <el-form ref="loginForm" :rules="loginRules" :model="loginForm" label-width="80px">
-            <el-form-item label="用户名" prop="loginAdmin">
-              <el-input v-model="loginForm.loginAdmin"></el-input>
+            <el-form-item label="用户名" prop="loginAccount">
+              <el-input v-model="loginForm.loginAccount"></el-input>
             </el-form-item>
             <el-form-item label="密码" prop="loginPsd">
-              <el-input type="password" v-model="loginForm.loginPsd"></el-input>
+              <el-input type="password" v-model="loginForm.loginPsd" @keyup.enter.native="onLogin"></el-input>
             </el-form-item>
             <div class="t-center">
               <el-button type="primary" @click="onLogin">登录</el-button>
@@ -17,8 +17,8 @@
         </el-tab-pane>
         <el-tab-pane label="注册">
           <el-form ref="form" :rules="rules" :model="form" label-width="80px">
-            <el-form-item label="用户名" prop="admin">
-              <el-input v-model="form.admin"></el-input>
+            <el-form-item label="用户名" prop="account">
+              <el-input v-model="form.account"></el-input>
             </el-form-item>
             <el-form-item label="昵称" prop="alias">
               <el-input v-model="form.alias"></el-input>
@@ -27,7 +27,7 @@
               <el-input type="password" v-model="form.psd"></el-input>
             </el-form-item>
             <el-form-item label="重复密码" prop="rePsd">
-              <el-input type="password" v-model="form.rePsd"></el-input>
+              <el-input type="password" v-model="form.rePsd" @keyup.enter.native="onCreate"></el-input>
             </el-form-item>
             <div class="t-center">
               <el-button type="primary" @click="onCreate">立即创建</el-button>
@@ -62,17 +62,17 @@ export default {
     };
     return {
       loginForm: {
-        loginAdmin: "",
+        loginAccount: "",
         loginPsd: ""
       },
       loginRules: {
-        loginAdmin: [
+        loginAccount: [
           { required: true, message: "请输入用户名", trigger: "blur" }
         ],
         loginPsd: [{ required: true, message: "请输入密码", trigger: "blur" }]
       },
       rules: {
-        admin: [{ required: true, message: "请输入用户名", trigger: "blur" }],
+        account: [{ required: true, message: "请输入用户名", trigger: "blur" }],
         alias: [{ required: true, message: "请输入昵称", trigger: "blur" }],
         psd: [
           {
@@ -90,7 +90,7 @@ export default {
         ]
       },
       form: {
-        admin: "",
+        account: "",
         alias: "",
         psd: "",
         rePsd: ""
@@ -102,10 +102,10 @@ export default {
       this.$refs.loginForm.validate(result => {
         if (result) {
           const sendData = {
-            admin: this.loginForm.loginAdmin,
+            account: this.loginForm.loginAccount,
             psd: this.loginForm.loginPsd
           };
-          this.$http.post("user/login", sendData).then(
+          this.$http.post("account/login", sendData).then(
             response => {
               if (response.body.success) {
                 this.$message({
@@ -145,25 +145,35 @@ export default {
       this.$refs.form.validate(result => {
         if (result) {
           const sendData = {
-            admin: this.form.admin,
+            account: this.form.account,
             alias: this.form.alias,
             psd: this.form.psd
           };
-          this.$http.post("user/register", sendData).then(
+          this.$http.post("account/register", sendData).then(
             response => {
-              this.$message({
-                type: "success",
-                message: response.body.message
-              });
-              const authData = {};
-              Object.keys(response.body).forEach(v => {
-                if (v === "message") {
-                  return;
-                }
-                authData[v] = response.body[v];
-              });
-              window.localStorage.setItem("authData", JSON.stringify(authData));
-              this.$router.push("/home");
+              if (response.body.success) {
+                this.$message({
+                  type: "success",
+                  message: response.body.message
+                });
+                const authData = {};
+                Object.keys(response.body).forEach(v => {
+                  if (v === "message" || v === "success") {
+                    return;
+                  }
+                  authData[v] = response.body[v];
+                });
+                window.localStorage.setItem(
+                  "authData",
+                  JSON.stringify(authData)
+                );
+                this.$router.push("/home");
+              } else {
+                this.$message({
+                  type: "error",
+                  message: response.body.message
+                });
+              }
             },
             response => {
               // error callback

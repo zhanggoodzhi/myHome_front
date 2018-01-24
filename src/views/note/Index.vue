@@ -1,15 +1,15 @@
 <template>
   <div>
     <div class="search-wrap">
-      <el-input class="keyword" v-model="keyword" placeholder="请输入日志关键字"></el-input>
+      <el-input class="keyword" v-model="keyword" placeholder="请输入留言关键字"></el-input>
       <el-button type="primary" icon="el-icon-search" @click="handleSearch()"></el-button>
-      <el-button class="add" type="success" icon="el-icon-plus" @click="handleAdd()">新增日志</el-button>
+      <el-button class="add" type="success" icon="el-icon-plus" @click="handleAdd()">新增留言</el-button>
     </div>
     <div class="table-wrap">
       <el-table :data="tableData" style="width: 100%">
         <el-table-column prop="title" label="标题">
         </el-table-column>
-        <el-table-column prop="content" label="日志内容">
+        <el-table-column prop="content" label="留言内容">
         </el-table-column>
         <el-table-column prop="date" label="更新日期">
         </el-table-column>
@@ -26,7 +26,7 @@
         <el-form-item label="标题" prop="title">
           <el-input v-model="data.title"></el-input>
         </el-form-item>
-        <el-form-item label="日志内容" prop="content">
+        <el-form-item label="留言内容" prop="content">
           <el-input v-model="data.content"></el-input>
         </el-form-item>
       </el-form>
@@ -44,7 +44,7 @@ export default {
   data() {
     return {
       keyword: "",
-      dialogTitle: "新增日志",
+      dialogTitle: "新增留言",
       dialogVisible: false,
       data: {
         title: "",
@@ -52,7 +52,7 @@ export default {
       },
       rules: {
         title: [{ required: true, message: "请输入标题", trigger: "blur" }],
-        content: [{ required: true, message: "请输入日志内容", trigger: "blur" }]
+        content: [{ required: true, message: "请输入留言内容", trigger: "blur" }]
       },
       currentId: "",
       tableData: []
@@ -66,19 +66,19 @@ export default {
       this.reload();
     },
     handleAdd() {
-      this.dialogTitle = "新增日志";
+      this.dialogTitle = "新增留言";
       this.dialogVisible = true;
     },
     handleEdit(row) {
       console.log(row);
-      this.dialogTitle = "编辑日志";
+      this.dialogTitle = "编辑留言";
       this.data.title = row.title;
       this.data.content = row.content;
       this.currentId = row._id;
       this.dialogVisible = true;
     },
     handleDelete(row) {
-      this.$confirm("确定要删除该日志吗?", "提示", {
+      this.$confirm("确定要删除该留言吗?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning"
@@ -119,7 +119,7 @@ export default {
             ...this.data,
             date: currentDate
           };
-          if (this.dialogTitle == "新增日志") {
+          if (this.dialogTitle == "新增留言") {
             this.$http.post("api/addNote", sendData).then(
               response => {
                 // get body data

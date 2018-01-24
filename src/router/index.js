@@ -1,10 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Login from '../views/login/index.vue';
-import Home from '../views/home/index.vue';
-import Note from '../views/note/index.vue';
-import Game from '../views/game/index.vue';
-import Layout from '../views/layout/index.vue';
+
 Vue.use(Router)
 
 export default new Router({
@@ -12,22 +8,25 @@ export default new Router({
   routes: [
     {
       path: '/',
-      component: Layout,
+      component: resolve => require.ensure([], () => resolve(require('../views/layout')),'layout'),
       children: [
         {
           path: '/home',
-          component: Home
+          component: resolve => require.ensure([], () => resolve(require('../views/home')),'home')
         }, {
           path: '/note',
-          component: Note
+          component: resolve => require.ensure([], () => resolve(require('../views/note')),'note')
         }, {
           path: '/game',
-          component: Game
+          component: resolve => require.ensure([], () => resolve(require('../views/game')),'game')
+        }, {
+          path: '/user',
+          component: resolve => require.ensure([], () => resolve(require('../views/user')),'user')
         }
       ]
     }, {
       path: '/login',
-      component: Login
+      component: resolve => require.ensure([], () => resolve(require('../views/login')),'login')
     }
   ]
 })

@@ -21,7 +21,12 @@ Vue
       .headers
       .set('Authorization', getAuthData() && getAuthData().token);
     // continue to next interceptor
-    next();
+    next(function (response) {
+      if (response.status === 403) {
+        console.log(response.body.message);
+        this.$router.replace('/login');
+      }
+    });
   });
 new Vue({el: '#app', router, template: '<App/>', components: {
     App
