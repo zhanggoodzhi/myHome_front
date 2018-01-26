@@ -39,6 +39,8 @@
 </template>
 <script>
 import moment from "moment";
+import { createNamespacedHelpers } from "vuex";
+const { mapMutations } = createNamespacedHelpers("noteBadge");
 
 export default {
   data() {
@@ -52,7 +54,9 @@ export default {
       },
       rules: {
         title: [{ required: true, message: "请输入标题", trigger: "blur" }],
-        content: [{ required: true, message: "请输入留言内容", trigger: "blur" }]
+        content: [
+          { required: true, message: "请输入留言内容", trigger: "blur" }
+        ]
       },
       currentId: "",
       tableData: []
@@ -62,20 +66,22 @@ export default {
     this.reload();
   },
   methods: {
+    ...mapMutations(['add','init','reduce']),
     handleSearch() {
       this.reload();
     },
     handleAdd() {
-      this.dialogTitle = "新增留言";
       this.dialogVisible = true;
+      this.dialogTitle = "新增留言";
     },
     handleEdit(row) {
-      console.log(row);
       this.dialogTitle = "编辑留言";
-      this.data.title = row.title;
-      this.data.content = row.content;
-      this.currentId = row._id;
       this.dialogVisible = true;
+      setTimeout(()=>{
+        this.data.title = row.title;
+        this.data.content = row.content;
+      },0);
+      this.currentId = row._id;
     },
     handleDelete(row) {
       this.$confirm("确定要删除该留言吗?", "提示", {
@@ -108,6 +114,7 @@ export default {
     reload() {
       this.$http.get(`api/getNotes?keyword=${this.keyword}`).then(response => {
         this.tableData = response.body;
+        this.init(response.body.length);
       });
     },
     save() {
@@ -124,7 +131,7 @@ export default {
               response => {
                 // get body data
                 this.dialogVisible = false;
-                this.keyword='';
+                this.keyword = "";
                 this.$message({
                   type: "success",
                   message: response.body.message
@@ -148,7 +155,7 @@ export default {
                 response => {
                   // get body data
                   this.dialogVisible = false;
-                  this.keyword='';
+                  this.keyword = "";
                   this.$message({
                     type: "success",
                     message: response.body.message

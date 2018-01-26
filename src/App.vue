@@ -5,18 +5,22 @@
 </template>
 
 <script>
+
+
 </script>
 
 <style lang="less" scope>
-  html{
+  html {
     // background: #eee;
-    body{
+    body {
       margin: 0;
     }
   }
-  ul{
+
+  ul {
     margin: 0;
     padding: 0;
     overflow: hidden;
   }
+
 </style>

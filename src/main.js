@@ -7,8 +7,12 @@ import 'element-ui/lib/theme-chalk/index.css'
 import router from './router'
 import 'animate.css/animate.min.css';
 import VueResource from 'vue-resource';
+import store from './store'
 import 'babel-polyfill';
-import {getAuthData} from 'components/utils';
+import {
+  getAuthData
+} from 'components/utils';
+
 Vue.use(ElementUI)
 Vue.use(VueResource);
 
@@ -24,10 +28,18 @@ Vue
     next(function (response) {
       if (response.status === 403) {
         console.log(response.body.message);
-        this.$router.replace('/login');
+        this
+          .$router
+          .replace('/login');
       }
     });
   });
-new Vue({el: '#app', router, template: '<App/>', components: {
+new Vue({
+  el: '#app',
+  router,
+  store,
+  template: '<App/>',
+  components: {
     App
-  }})
+  }
+})

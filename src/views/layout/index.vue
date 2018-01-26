@@ -24,7 +24,7 @@
           </el-menu-item>
           <el-menu-item index="/note">
             <i class="el-icon-setting"></i>
-            <span slot="title">留言</span>
+            <span slot="title">留言({{noteNumber}})</span>
           </el-menu-item>
           <el-menu-item index="/game">
             <i class="el-icon-share"></i>
@@ -48,7 +48,10 @@
   </el-container>
 </template>
 <script>
-import {getAuthData} from 'components/utils';
+import { getAuthData } from "components/utils";
+import { createNamespacedHelpers } from "vuex";
+// import { mapState } from "vuex";
+const { mapState } = createNamespacedHelpers("noteBadge");
 export default {
   data() {
     return {
@@ -70,8 +73,9 @@ export default {
     }
   },
   computed: {
+    ...mapState(["noteNumber"]),
     isAdmin() {
-      return getAuthData()&&getAuthData().ifAdmin;
+      return getAuthData() && getAuthData().ifAdmin;
     }
   }
 };
