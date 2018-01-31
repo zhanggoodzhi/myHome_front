@@ -71,7 +71,8 @@
 </template>
 <script>
 import moment from "moment";
-
+import { ceshi } from "components/ceshi";
+var a=ceshi();
 export default {
   data() {
     return {

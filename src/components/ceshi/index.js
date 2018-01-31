@@ -1,10 +1,3 @@
-function getAuthData() {
-  const authData = localStorage.getItem('authData');
-  if (authData) {
-    return JSON.parse(authData);
-  }
-  return null;
-}
 
 function ceshi() {
   var a = 777777777777;
@@ -286,6 +279,5 @@ function ceshi() {
   return c;
 }
 export {
-  getAuthDate,
   ceshi
 };

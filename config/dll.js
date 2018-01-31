@@ -1,5 +1,5 @@
 module.exports = {
-  path: 'public/dll',
+  path: 'static/dll',
   libs: [
     'animate.css/animate.min.css',
     'element-ui/lib/theme-chalk/index.css',
@@ -8,5 +8,5 @@ module.exports = {
     'vue-resource',
     'babel-polyfill',
     'moment'
-  ],
+  ]
 }

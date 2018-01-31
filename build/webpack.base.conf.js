@@ -5,7 +5,7 @@ const utils = require('./utils')
 const config = require('../config')
 const dllConfig = require('../config/dll')
 const vueLoaderConfig = require('./vue-loader.conf')
-const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
+// const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
 
 function resolve(dir) {
   return path.join(__dirname, '..', dir)
@@ -106,14 +106,14 @@ module.exports = {
       context: __dirname,
       manifest: require(`../${dllConfig.path}/libs-mainfest.json`) // 指向生成的manifest.json
     }),
-    new AddAssetHtmlPlugin([{
-      filepath: require.resolve(libJsName),
-      includeSourcemap: false,
-    }
+    // new AddAssetHtmlPlugin([{
+    //   filepath: require.resolve(libJsName),
+    //   includeSourcemap: false,
+    // }
     // ,{
     //   filepath: require.resolve(libCssName),
     //   includeSourcemap: false,
     // }
-  ]),
+  // ]),
   ]
 }
