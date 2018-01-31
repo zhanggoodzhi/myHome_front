@@ -1,12 +1,19 @@
 'use strict'
+const webpack = require('webpack')
 const path = require('path')
 const utils = require('./utils')
 const config = require('../config')
+const dllConfig = require('../config/dll')
 const vueLoaderConfig = require('./vue-loader.conf')
+const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
 
 function resolve(dir) {
   return path.join(__dirname, '..', dir)
 }
+
+const bundleConfig = require(`../${dllConfig.path}/bundle-config.json`)
+const libJsName = bundleConfig.libs.js ? `../${dllConfig.path}/${bundleConfig.libs.js}` : ''
+const libCssName = bundleConfig.libs.css ? `../${dllConfig.path}/${bundleConfig.libs.css}` : ''
 
 const createLintingRule = () => ({
   test: /\.(js|vue)$/,
@@ -29,9 +36,9 @@ module.exports = {
   output: {
     path: config.build.assetsRoot,
     filename: '[name].js',
-    publicPath: process.env.NODE_ENV === 'production'
-      ? config.build.assetsPublicPath
-      : config.dev.assetsPublicPath
+    publicPath: process.env.NODE_ENV === 'production' ?
+      config.build.assetsPublicPath :
+      config.dev.assetsPublicPath
   },
   resolve: {
     extensions: [
@@ -48,9 +55,9 @@ module.exports = {
   },
   module: {
     rules: [
-      ...(config.dev.useEslint
-        ? [createLintingRule()]
-        : []), {
+      ...(config.dev.useEslint ?
+        [createLintingRule()] :
+        []), {
         test: /\.vue$/,
         loader: 'vue-loader',
         options: vueLoaderConfig
@@ -93,5 +100,20 @@ module.exports = {
     net: 'empty',
     tls: 'empty',
     child_process: 'empty'
-  }
+  },
+  plugins: [
+    new webpack.DllReferencePlugin({
+      context: __dirname,
+      manifest: require(`../${dllConfig.path}/libs-mainfest.json`) // 指向生成的manifest.json
+    }),
+    new AddAssetHtmlPlugin([{
+      filepath: require.resolve(libJsName),
+      includeSourcemap: false,
+    }
+    // ,{
+    //   filepath: require.resolve(libCssName),
+    //   includeSourcemap: false,
+    // }
+  ]),
+  ]
 }
