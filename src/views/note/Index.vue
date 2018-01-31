@@ -101,6 +101,7 @@ export default {
                 message: response.body.message
               });
               this.reload();
+              this.reduce();
             },
             response => {
               // error callback
@@ -114,7 +115,6 @@ export default {
     reload() {
       this.$http.get(`api/getNotes?keyword=${this.keyword}`).then(response => {
         this.tableData = response.body;
-        this.init(response.body.length);
       });
     },
     save() {
@@ -137,6 +137,7 @@ export default {
                   message: response.body.message
                 });
                 this.reload();
+                this.add();
               },
               response => {
                 // error callback

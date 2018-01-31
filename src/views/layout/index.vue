@@ -50,8 +50,7 @@
 <script>
 import { getAuthData } from "components/utils";
 import { createNamespacedHelpers } from "vuex";
-// import { mapState } from "vuex";
-const { mapState } = createNamespacedHelpers("noteBadge");
+const { mapState, mapActions} = createNamespacedHelpers("noteBadge");
 export default {
   data() {
     return {
@@ -65,8 +64,12 @@ export default {
     } else {
       this.alias = JSON.parse(authDataString).alias;
     }
+    this.getCount();
   },
   methods: {
+     ...mapActions([
+      'getCount'
+    ]),
     onLogout() {
       localStorage.setItem("authData", "");
       this.$router.replace("/login");
