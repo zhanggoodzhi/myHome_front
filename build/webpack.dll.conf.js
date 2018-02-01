@@ -19,7 +19,7 @@ module.exports        = {
       name: '[name]_library',
       context: __dirname // 执行的上下文环境，对之后DllReferencePlugin有用
     }),
-    // new ExtractTextPlugin('[name].[contenthash:7].css'),
+    new ExtractTextPlugin('[name].[contenthash:7].css'),
     new webpack.optimize.UglifyJsPlugin({
       compress: {
         warnings: false
@@ -34,11 +34,15 @@ module.exports        = {
     rules: [
       {
         test: /\.css$/,
-        loader:['style-loader', 'css-loader']
-        // use: ExtractTextPlugin.extract({
-        //   fallback: "style-loader",
-        //   use: "css-loader"
-        // })
+        use: ExtractTextPlugin.extract({
+          fallback: "style-loader",
+          use:{
+            loader: 'css-loader',
+            options: {
+              minimize: true
+            }
+          }
+        })
       },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,

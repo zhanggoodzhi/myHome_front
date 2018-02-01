@@ -286,6 +286,6 @@ function ceshi() {
   return c;
 }
 export {
-  getAuthDate,
+  getAuthData,
   ceshi
 };

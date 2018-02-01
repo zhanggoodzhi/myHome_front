@@ -3,9 +3,9 @@
 import Vue from 'vue'
 import App from './App'
 import ElementUI from 'element-ui'
-import 'element-ui/lib/theme-chalk/index.css'
+import 'animate.css/animate.css';
+import 'element-ui/lib/theme-chalk/index.css';
 import router from './router'
-import 'animate.css/animate.min.css';
 import VueResource from 'vue-resource';
 import store from './store'
 import 'babel-polyfill';

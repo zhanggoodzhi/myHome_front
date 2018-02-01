@@ -14,6 +14,7 @@
   "dependencies": {
     "animate.css": "^3.5.2",
     "babel-polyfill": "^6.26.0",
+    "bootstrap": "^4.0.0",
     "element-ui": "^2.0.11",
     "less": "^2.7.3",
     "less-loader": "^4.0.5",
@@ -38,7 +39,7 @@
     "babel-preset-stage-2": "^6.22.0",
     "chalk": "^2.0.1",
     "copy-webpack-plugin": "^4.0.1",
-    "css-loader": "^0.28.0",
+    "css-loader": "^0.28.9",
     "eslint": "^3.19.0",
     "eslint-friendly-formatter": "^3.0.0",
     "eslint-loader": "^1.7.1",
