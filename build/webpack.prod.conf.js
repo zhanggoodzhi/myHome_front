@@ -32,15 +32,15 @@ const webpackConfig = merge(baseWebpackConfig, {
     new webpack.DefinePlugin({
       'process.env': env
     }),
-    // new UglifyJsPlugin({
-    //   uglifyOptions: {
-    //     compress: {
-    //       warnings: false
-    //     }
-    //   },
-    //   sourceMap: config.build.productionSourceMap,
-    //   parallel: true
-    // }),
+    new UglifyJsPlugin({
+      uglifyOptions: {
+        compress: {
+          warnings: false
+        }
+      },
+      sourceMap: config.build.productionSourceMap,
+      parallel: true
+    }),
     // extract css into its own file
     new ExtractTextPlugin({
       filename: utils.assetsPath('css/[name].[contenthash].css'),
@@ -68,7 +68,7 @@ const webpackConfig = merge(baseWebpackConfig, {
     new HtmlWebpackPlugin({
       filename: config.build.index,
       template: 'index.html',
-      chunks: ['app', 'vendor', 'share', 'manifest', 'vendor-async'],
+      chunks: ['app', 'share', 'manifest', 'vendor-async'],
       inject: true,
       minify: {
         removeComments: true,
@@ -83,7 +83,7 @@ const webpackConfig = merge(baseWebpackConfig, {
     new HtmlWebpackPlugin({
       filename: config.build.admin,
       template: 'admin.html',
-      chunks: ['admin', 'vendor', 'share', 'manifest', 'vendor-async'],
+      chunks: ['admin', 'share', 'manifest', 'vendor-async'],
       inject: true,
       minify: {
         removeComments: true,
@@ -124,7 +124,7 @@ const webpackConfig = merge(baseWebpackConfig, {
     // see: https://webpack.js.org/plugins/commons-chunk-plugin/#extra-async-commons-chunk
     new webpack.optimize.CommonsChunkPlugin({
       names: "share",
-      minChunks:Infinity
+      minChunks: Infinity
     }),
     new webpack.optimize.CommonsChunkPlugin({
       async: 'vendor-async',

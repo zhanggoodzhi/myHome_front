@@ -11,9 +11,12 @@ const getters = {
 
 // actions
 const actions = {
-  getCount({ commit }){
-    Vue.http.get(`api/getNoteCount`).then(response => {
-      commit('init',response.body);
+  getCount({
+    commit
+  }) {
+    Vue.http.get('/api/getNoteCount').then(response => {
+      commit('init', response.body);
+
     });
   }
 }

@@ -115,7 +115,7 @@
               account: this.loginForm.loginAccount,
               psd: this.loginForm.loginPsd
             };
-            this.$http.post("account/login", sendData).then(
+            this.$http.post("/account/login", sendData).then(
               response => {
                 if (response.body.success) {
                   this.$message({
@@ -159,7 +159,7 @@
               alias: this.form.alias,
               psd: this.form.psd
             };
-            this.$http.post("account/register", sendData).then(
+            this.$http.post("/account/register", sendData).then(
               response => {
                 if (response.body.success) {
                   this.$message({

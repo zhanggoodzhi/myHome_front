@@ -14,7 +14,7 @@ export default {
     };
   },
   created() {
-    this.$http.get(`api/getLogs`).then(response => {
+    this.$http.get(`/api/getLogs`).then(response => {
       this.logs = response.body.reverse();
     });
   }

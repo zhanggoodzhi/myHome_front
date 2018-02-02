@@ -91,12 +91,12 @@ export default {
   },
   methods: {
     getHorseLamp() {
-      this.$http.get("api/games/horseLamp").then(response => {
+      this.$http.get("/api/games/horseLamp").then(response => {
         this.horseLamp = response.body;
       });
     },
     getGameRank() {
-      this.$http.get("api/games/rank").then(response => {
+      this.$http.get("/api/games/rank").then(response => {
         this.rank = response.body;
       });
     },

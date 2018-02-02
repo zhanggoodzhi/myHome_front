@@ -35,7 +35,7 @@ export default {
         type: "warning"
       }).then(() => {
         this.$http
-          .post("api/deleteUser", {
+          .post("/api/deleteUser", {
             id: row._id
           })
           .then(
@@ -57,7 +57,7 @@ export default {
       });
     },
     reload() {
-      this.$http.get(`api/getUsers`).then(response => {
+      this.$http.get('/api/getUsers').then(response => {
         this.tableData = response.body;
       });
     }

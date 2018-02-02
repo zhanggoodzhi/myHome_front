@@ -13,7 +13,6 @@ import {
   getAuthData
 } from 'components/utils';
 
-var a=ceshi(1,2);
 Vue.use(ElementUI)
 Vue.use(VueResource);
 

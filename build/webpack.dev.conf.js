@@ -34,10 +34,13 @@ const devWebpackConfig = merge(baseWebpackConfig, {
   devServer: {
     clientLogLevel: 'warning',
     historyApiFallback: {
-      rewrites: [{
-        from: /.*/,
+      rewrites: [ {
+        from: '/index',
         to: path.posix.join(config.dev.assetsPublicPath, 'index.html')
-      }, ],
+      }, {
+        from: '/admin',
+        to: path.posix.join(config.dev.assetsPublicPath, 'admin.html')
+      }],
     },
     hot: true,
     contentBase: false, // since we use CopyWebpackPlugin.
@@ -45,12 +48,10 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     host: HOST || config.dev.host,
     port: PORT || config.dev.port,
     open: config.dev.autoOpenBrowser,
-    overlay: config.dev.errorOverlay ?
-      {
-        warnings: false,
-        errors: true
-      } :
-      false,
+    overlay: config.dev.errorOverlay ? {
+      warnings: false,
+      errors: true
+    } : false,
     publicPath: config.dev.assetsPublicPath,
     proxy: config.dev.proxyTable,
     quiet: true, // necessary for FriendlyErrorsPlugin
@@ -69,13 +70,13 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: 'index.html',
-      chunks: ['app'],
+      chunks: ['app', 'share'],
       inject: true
     }),
     new HtmlWebpackPlugin({
       filename: 'admin.html',
       template: 'admin.html',
-      chunks: ['admin'],
+      chunks: ['admin', 'share'],
       inject: true
     }),
     // copy custom static assets
@@ -104,8 +105,7 @@ module.exports = new Promise((resolve, reject) => {
           messages: [`Your application is running here: http://${devWebpackConfig.devServer.host}:${port}`],
         },
         onErrors: config.dev.notifyOnErrors ?
-          utils.createNotifierCallback() :
-          undefined
+          utils.createNotifierCallback() : undefined
       }))
 
       resolve(devWebpackConfig)
