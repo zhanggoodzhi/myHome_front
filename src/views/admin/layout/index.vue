@@ -3,7 +3,7 @@
     <el-header height="60px" class="header">
       <div class="left">
         <a class="img-wrap">
-          <img class="gicon" src="/static/logo.jpg" alt="">
+          后台管理系统
         </a>
       </div>
       <div class="right">
@@ -22,17 +22,9 @@
             <i class="el-icon-info"></i>
             <span slot="title">首页</span>
           </el-menu-item>
-          <el-menu-item index="/note">
+          <el-menu-item index="/setting">
             <i class="el-icon-setting"></i>
-            <span slot="title">留言({{noteNumber}})</span>
-          </el-menu-item>
-          <el-menu-item index="/game">
-            <i class="el-icon-share"></i>
-            <span slot="title">游戏分享</span>
-          </el-menu-item>
-          <el-menu-item v-show="isAdmin" index="/user">
-            <i class="el-icon-setting"></i>
-            <span slot="title">用户管理</span>
+            <span slot="title">设置</span>
           </el-menu-item>
         </el-menu>
       </el-aside>
@@ -49,8 +41,7 @@
 </template>
 <script>
 import { getAuthData } from "components/utils";
-import { createNamespacedHelpers } from "vuex";
-const { mapState, mapActions} = createNamespacedHelpers("noteBadge");
+
 export default {
   data() {
     return {
@@ -64,19 +55,14 @@ export default {
     } else {
       this.alias = JSON.parse(authDataString).alias;
     }
-    this.getCount();
   },
   methods: {
-     ...mapActions([
-      'getCount'
-    ]),
     onLogout() {
       localStorage.setItem("authData", "");
       this.$router.replace("/login");
     }
   },
   computed: {
-    ...mapState(["noteNumber"]),
     isAdmin() {
       return getAuthData() && getAuthData().ifAdmin;
     }

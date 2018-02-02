@@ -16,6 +16,8 @@
   </div>
 </template>
 <script>
+import { ceshi2 } from "components/ceshi2";
+var a=ceshi2(1,2);
 export default {
   data() {
     return {

@@ -1,18 +1,19 @@
 // The Vue build version to load with the `import` command (runtime-only or
 // standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue';
-import App from './views/App';
+import Admin from './views/Admin';
 import ElementUI from 'element-ui';
 import 'animate.css/animate.min.css';
 import 'element-ui/lib/theme-chalk/index.css';
-import router from './router';
+import router from './router/admin';
 import VueResource from 'vue-resource';
-import store from './store/index'
+import store from './store/admin'
 import 'babel-polyfill';
 import {
   getAuthData
 } from 'components/utils';
 
+var a=ceshi(1,2);
 Vue.use(ElementUI)
 Vue.use(VueResource);
 
@@ -37,9 +38,9 @@ Vue
 new Vue({
   el: '#app',
   router,
-  store,
-  template: '<App/>',
+  // store,
+  template: '<Admin/>',
   components: {
-    App
+    Admin
   }
 })

@@ -5,15 +5,15 @@ const utils = require('./utils')
 const config = require('../config')
 const dllConfig = require('../config/dll')
 const vueLoaderConfig = require('./vue-loader.conf')
-// const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
+const HtmlWebpackIncludeAssetsPlugin = require('html-webpack-include-assets-plugin');
 
 function resolve(dir) {
   return path.join(__dirname, '..', dir)
 }
 
 const bundleConfig = require(`../${dllConfig.path}/bundle-config.json`)
-const libJsName = bundleConfig.libs.js ? `../${dllConfig.path}/${bundleConfig.libs.js}` : ''
-const libCssName = bundleConfig.libs.css ? `../${dllConfig.path}/${bundleConfig.libs.css}` : ''
+const libJsName = bundleConfig.libs.js ? `${dllConfig.path}/${bundleConfig.libs.js}` : ''
+const libCssName = bundleConfig.libs.css ? `${dllConfig.path}/${bundleConfig.libs.css}` : ''
 
 const createLintingRule = () => ({
   test: /\.(js|vue)$/,
@@ -31,14 +31,15 @@ const createLintingRule = () => ({
 module.exports = {
   context: path.resolve(__dirname, '../'),
   entry: {
-    app: ["babel-polyfill", './src/main.js']
+    app: ["babel-polyfill", './src/main.js'],
+    admin: ["babel-polyfill", './src/admin.js'],
+    share:['./src/components/utils/index.js']
   },
   output: {
     path: config.build.assetsRoot,
     filename: '[name].js',
     publicPath: process.env.NODE_ENV === 'production' ?
-      config.build.assetsPublicPath :
-      config.dev.assetsPublicPath
+      config.build.assetsPublicPath : config.dev.assetsPublicPath
   },
   resolve: {
     extensions: [
@@ -55,9 +56,7 @@ module.exports = {
   },
   module: {
     rules: [
-      ...(config.dev.useEslint ?
-        [createLintingRule()] :
-        []), {
+      ...(config.dev.useEslint ? [createLintingRule()] : []), {
         test: /\.vue$/,
         loader: 'vue-loader',
         options: vueLoaderConfig
@@ -106,14 +105,9 @@ module.exports = {
       context: __dirname,
       manifest: require(`../${dllConfig.path}/libs-mainfest.json`) // 指向生成的manifest.json
     }),
-    // new AddAssetHtmlPlugin([{
-    //   filepath: require.resolve(libJsName),
-    //   includeSourcemap: false,
-    // }
-    // ,{
-    //   filepath: require.resolve(libCssName),
-    //   includeSourcemap: false,
-    // }
-  // ]),
+    new HtmlWebpackIncludeAssetsPlugin({
+      assets: [libJsName, libCssName],
+      append: false
+    })
   ]
 }

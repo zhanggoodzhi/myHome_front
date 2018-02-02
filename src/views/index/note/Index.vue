@@ -40,8 +40,9 @@
 <script>
 import moment from "moment";
 import { createNamespacedHelpers } from "vuex";
+
 import { ceshi } from "components/ceshi";
-var a=ceshi();
+var a=ceshi(1,2);
 const { mapMutations } = createNamespacedHelpers("noteBadge");
 export default {
   data() {

@@ -1,8 +1,6 @@
 
-function ceshi() {
-  var a = 777777777777;
-  var b = 7777777777;
-  var c = a + b;
+function ceshi(a,b) {
+  var c = a + b+777777777777;
   return c;
 }
 export {

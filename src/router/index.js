@@ -4,29 +4,29 @@ import Router from 'vue-router';
 Vue.use(Router)
 
 export default new Router({
-  mode: 'history',
+  // mode: 'history',
   routes: [
     {
       path: '/',
-      component: resolve => require.ensure([], () => resolve(require('../views/layout')),'layout'),
+      component: resolve => require.ensure([], () => resolve(require('../views/index/layout')),'layout'),
       children: [
         {
           path: '/home',
-          component: resolve => require.ensure([], () => resolve(require('../views/home')),'home')
+          component: resolve => require.ensure([], () => resolve(require('../views/index/home')),'home')
         }, {
           path: '/note',
-          component: resolve => require.ensure([], () => resolve(require('../views/note')),'note')
+          component: resolve => require.ensure([], () => resolve(require('../views/index/note')),'note')
         }, {
           path: '/game',
-          component: resolve => require.ensure([], () => resolve(require('../views/game')),'game')
+          component: resolve => require.ensure([], () => resolve(require('../views/index/game')),'game')
         }, {
           path: '/user',
-          component: resolve => require.ensure([], () => resolve(require('../views/user')),'user')
+          component: resolve => require.ensure([], () => resolve(require('../views/index/user')),'user')
         }
       ]
     }, {
       path: '/login',
-      component: resolve => require.ensure([], () => resolve(require('../views/login')),'login')
+      component: resolve => require.ensure([], () => resolve(require('../views/index/login')),'login')
     }
   ]
 })
