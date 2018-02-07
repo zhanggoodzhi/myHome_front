@@ -42,7 +42,7 @@ import moment from "moment";
 import { createNamespacedHelpers } from "vuex";
 
 import { ceshi } from "components/ceshi";
-var a=ceshi(1,2);
+var a = ceshi(1, 2);
 const { mapMutations } = createNamespacedHelpers("noteBadge");
 export default {
   data() {
@@ -68,7 +68,7 @@ export default {
     this.reload();
   },
   methods: {
-    ...mapMutations(['add','init','reduce']),
+    ...mapMutations(["add", "init", "reduce"]),
     handleSearch() {
       this.reload();
     },
@@ -79,10 +79,10 @@ export default {
     handleEdit(row) {
       this.dialogTitle = "编辑留言";
       this.dialogVisible = true;
-      setTimeout(()=>{
+      setTimeout(() => {
         this.data.title = row.title;
         this.data.content = row.content;
-      },0);
+      }, 0);
       this.currentId = row._id;
     },
     handleDelete(row) {

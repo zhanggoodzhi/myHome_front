@@ -73,8 +73,6 @@
 import moment from "moment";
 import 'babel-polyfill';
 import { ceshi } from "components/ceshi";
-import { cesh } from "components/utils";
-var c=cesh();
 import { ceshi2 } from "components/ceshi2";
 var a=ceshi(3,4);
 var b=ceshi2(3,4);

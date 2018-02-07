@@ -12,7 +12,7 @@ import 'babel-polyfill';
 import {
   getAuthData
 } from 'components/utils';
-
+import 'components/common/iconfont.css';
 Vue.use(ElementUI)
 Vue.use(VueResource);
 

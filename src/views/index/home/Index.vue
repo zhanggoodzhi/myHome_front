@@ -7,6 +7,8 @@
     </ul>
 </template>
 <script>
+import shTest from 'components/share';
+var a=shTest(3);
 export default {
   data() {
     return {

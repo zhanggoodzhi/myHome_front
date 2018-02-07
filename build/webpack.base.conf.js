@@ -33,7 +33,7 @@ module.exports = {
   entry: {
     app: ["babel-polyfill", './src/main.js'],
     admin: ["babel-polyfill", './src/admin.js'],
-    share:['./src/components/utils/index.js']
+    share:['./src/components/share/index.js']
   },
   output: {
     path: config.build.assetsRoot,

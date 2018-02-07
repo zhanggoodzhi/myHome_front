@@ -3,6 +3,8 @@
 </template>
 <script>
 import moment from 'moment';
+import shTest from 'components/share';
+var a=shTest(3);
 export default {
   
 };

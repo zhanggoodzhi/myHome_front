@@ -19,11 +19,11 @@
       <el-aside class="menu-wrap" width="200px">
         <el-menu :router="true" :default-active="$route.path" class="menu">
           <el-menu-item index="/home">
-            <i class="el-icon-info"></i>
+            <i class="icon-activity_fill iconfont"></i>
             <span slot="title">首页</span>
           </el-menu-item>
           <el-menu-item index="/note">
-            <i class="el-icon-setting"></i>
+            <i class="icon-barrage_fill iconfont"></i>
             <span slot="title">留言({{noteNumber}})</span>
           </el-menu-item>
           <el-menu-item index="/game">
@@ -31,14 +31,18 @@
             <span slot="title">游戏分享</span>
           </el-menu-item>
           <el-menu-item v-show="isAdmin" index="/user">
-            <i class="el-icon-setting"></i>
+            <i class="icon-group_fill iconfont"></i>
             <span slot="title">用户管理</span>
           </el-menu-item>
         </el-menu>
       </el-aside>
       <el-main>
+            <el-breadcrumb separator="/" class="bread">
+              <el-breadcrumb-item :to="{ path: breadPath }">{{breadName}}</el-breadcrumb-item>
+              <el-breadcrumb-item></el-breadcrumb-item>
+            </el-breadcrumb>
         <transition name="slide" enter-active-class="animated bounceInLeft" leave-active-class="animated bounceOutRight" mode="out-in">
-          <router-view/>
+            <router-view/>
         </transition>
       </el-main>
     </el-container>
@@ -50,12 +54,29 @@
 <script>
 import { getAuthData } from "components/utils";
 import { createNamespacedHelpers } from "vuex";
-const { mapState, mapActions} = createNamespacedHelpers("noteBadge");
+const { mapState, mapActions } = createNamespacedHelpers("noteBadge");
 export default {
   data() {
     return {
-      alias: ""
+      alias: "",
+      breadName: "",
+      breadPath: ""
     };
+  },
+  beforeRouteEnter(to, from, next) {
+    console.log("进入");
+    next(
+      next(vm => {
+        vm.breadName = to.meta;
+        vm.breadPath = to.path;
+        console.log(to);
+      })
+    );
+  },
+  beforeRouteUpdate(to, from, next) {
+    this.breadName = to.meta;
+    this.breadPath = to.path;
+    next();
   },
   created() {
     const authDataString = localStorage.getItem("authData");
@@ -67,9 +88,7 @@ export default {
     this.getCount();
   },
   methods: {
-     ...mapActions([
-      'getCount'
-    ]),
+    ...mapActions(["getCount"]),
     onLogout() {
       localStorage.setItem("authData", "");
       this.$router.replace("/login");
@@ -87,7 +106,9 @@ export default {
 .container {
   height: 100vh;
 }
-
+.bread {
+  margin-bottom: 15px;
+}
 .menu-wrap {
   border-right: 1px solid #e6e6e6;
   .menu {
@@ -130,6 +151,16 @@ export default {
         }
       }
     }
+  }
+}
+
+.menu-wrap {
+  .iconfont {
+    margin-right: 5px;
+    width: 24px;
+    text-align: center;
+    font-size: 18px;
+    vertical-align: middle;
   }
 }
 

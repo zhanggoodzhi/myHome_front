@@ -19,6 +19,9 @@ export default new Router({
     }, {
       path: '/setting',
       component: resolve => require.ensure([], () => resolve(require('../views/admin/setting')), 'admin-setting')
+    }, {
+      path: '/preview',
+      component: resolve => require.ensure([], () => resolve(require('../views/admin/preview')), 'admin-preview')
     }]
   }]
 })

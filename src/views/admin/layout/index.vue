@@ -26,6 +26,10 @@
             <i class="el-icon-setting"></i>
             <span slot="title">设置</span>
           </el-menu-item>
+           <el-menu-item index="/preview">
+            <i class="el-icon-setting"></i>
+            <span slot="title">试卷预览</span>
+          </el-menu-item>
         </el-menu>
       </el-aside>
       <el-main>
