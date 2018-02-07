@@ -7,7 +7,9 @@
     </ul>
 </template>
 <script>
+// const shTest=resolve => require.ensure([], () => resolve(require('components/share')));
 import shTest from 'components/share';
+// var shTest=require('components/share');
 var a=shTest(3);
 export default {
   data() {

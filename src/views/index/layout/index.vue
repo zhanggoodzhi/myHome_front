@@ -65,15 +65,14 @@ export default {
   },
   beforeRouteEnter(to, from, next) {
     console.log("进入");
-    next(
       next(vm => {
         vm.breadName = to.meta;
         vm.breadPath = to.path;
         console.log(to);
       })
-    );
   },
   beforeRouteUpdate(to, from, next) {
+    console.log('更新');
     this.breadName = to.meta;
     this.breadPath = to.path;
     next();
